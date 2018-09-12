@@ -37,3 +37,30 @@ class Solution {
         return len;
     }
 }
+
+/*
+  正解：依旧是两个指针，一开始分别指向index0和index1，因为数组是排序数组，如果尾指针指向的数大于头指针指向的数，那么尾指针所指的数就是有意义的，就应该让头指针+1并将尾指针所指的数赋值给头指针指向的位置；若不大于，则尾指针+1。直到尾指针遍历整个数组。
+  执行用时：15 ms 已经战胜 55.00 % 的 java 提交记录
+*/
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length > 1) {
+            int head = 0;
+            int tail = 1;
+            while (tail < nums.length) {
+                if (nums[head] < nums[tail]) {
+                    head++;
+                    nums[head] = nums[tail];
+                    tail++;
+                }
+                else {
+                    tail++;
+                }
+            }
+            return head + 1;
+        }
+        else {
+            return nums.length;
+        }
+    }
+}
