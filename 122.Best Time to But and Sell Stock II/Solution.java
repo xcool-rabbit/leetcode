@@ -1,6 +1,7 @@
 //122. 买卖股票的最佳时机 II
 /*
   在递减的最低点买入，在递增的最高点卖出
+  执行用时：2 ms 已经战胜 56.65 % 的 java 提交记录
 */
 class Solution {
     public int maxProfit(int[] prices) {

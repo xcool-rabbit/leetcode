@@ -4,6 +4,7 @@
   但这样做遇到了一点问题，超时了。
   后来进行了几方面的优化，对k的值取模，对k较大的值，改变为向左移动互补的距离。
   最终通过。
+  执行用时：96 ms 已经战胜 36.83 % 的 java 提交记录
 */
 class Solution {
     public void rotate(int[] nums, int k) {
@@ -43,6 +44,7 @@ class Solution {
   比如一个长度为7的数组，向右平移两位，就是将最后两个元素挪到最前面，将前五个元素挪到后面。
   那么就可以让前五个元素先做翻转，再让后两个元素做翻转，最终将整个数组进行翻转，即可得到最终结果。
   超级快。
+  执行用时：0 ms 已经战胜 100.00 % 的 java 提交记录
 */
 class Solution {
     public void rotate(int[] nums, int k) {
