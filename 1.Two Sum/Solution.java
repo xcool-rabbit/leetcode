@@ -55,4 +55,20 @@ class Solution {
   emmm，我好像跟大神之间差一点儿操作。
   同样是利用HashMap，先查询keySet里是否有自己，没有的话存储target-自己，有的话答案就出来了。
   这样很巧妙的解决了Map中Key不能重复的问题。
+  执行用时：8 ms 已经战胜 82.31 % 的 java 提交记录
 */
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Integer tmp = null;
+        
+        for (int i = 0; i < nums.length; i++) {
+            if ((tmp = map.get(nums[i])) != null)
+                return new int[]{(int)tmp, i};
+            else
+                map.put(target - nums[i], i);
+        }
+        
+        return null;
+    }
+}
