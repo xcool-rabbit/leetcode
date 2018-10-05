@@ -5,7 +5,7 @@
   利用两个指针，一个头，一个尾，将有效部分囊括起来，提取出子字符串。
   为了防止溢出，需要对子字符串的长度进行限制，超过10位数的（Integer.MAX_VALUE是10位），直接根据正负号返回MAX_VALUE或者MIN_VALUE。
   正常的情况就通过parseLong来转换（因为10位数的还是有超int范围的数）
-  执行用时：34 ms 已经战胜 84.63 % 的 java 提交记录
+  执行用时：30 ms 已经战胜 94.36 % 的 java 提交记录
 */
 class Solution {
     public int myAtoi(String str) {
