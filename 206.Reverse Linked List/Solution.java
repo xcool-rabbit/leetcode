@@ -6,6 +6,14 @@
   按住初始链表的头结点，每一次都将头结点的后一个结点，挪到链表的开头，即可将链表反转。代码即用的这种方式。
   执行用时：0 ms 已经战胜 100.00 % 的 java 提交记录
 */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
 class Solution {
   public ListNode reverseList(ListNode head) {
       ListNode origin = head;
