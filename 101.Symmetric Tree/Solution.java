@@ -159,3 +159,38 @@ class Solution {
         return true;
     }
 }
+/*
+  有一点双指针那味了
+  在一个循环里同时操作两个指针，镜像对称着遍历，就能判断树是不是镜像对称的了
+  细节就是利用上了返回值
+  递归永远滴神，迭代就不写了，肯定慢
+  执行用时：0 ms 已经战胜 100.00 % 的 java 提交记录
+*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return root == null || dfs(root.left, root.right);
+    }
+    
+    private boolean dfs(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        } else if (left != null && right != null) {
+            if (left.val != right.val) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        
+        return dfs(left.left, right.right) && dfs(left.right, right.left);
+    }
+}
