@@ -35,3 +35,7 @@ class KthLargest {
  * KthLargest obj = new KthLargest(k, nums);
  * int param_1 = obj.add(val);
  */
+ /*
+   从编码方便的角度上来讲，PriorityQueue实现的堆很方便
+   但是这个题是在二叉搜索树分类里的，我觉得有点强行了
+*/
