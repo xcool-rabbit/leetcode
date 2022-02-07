@@ -134,6 +134,81 @@ class Solution {
     }
 }
 /*
+  在做完153题之后，我有一个问题，为什么33题就写的如此的轻松
+  原因在于，二分的时候，left的变动尤为重要，尽量让left变
+  所以这个题，寻找峰值就可以变为寻找谷值
+  如果你硬要找峰值呢，也可以
+  之前的做法就是硬找峰值，left和right双向奔赴，用了一个if拦住了left = mid + 1后会错过的可能
+  但是我在实现的时候，借鉴了153题的经验，想直接比较nums[left]和nums[right]
+  意外的发现，循环里的if也不用写了，这是为什么呢
+  原因在于，判断的规则，正好就是，我们在面对有序序列时的操作规则
+  回看153题，为什么那么别扭，因为那个逻辑在面对有序序列的时候，造成的效果正好相反
+  所以，这里产生了第二个感悟：nums[mid]可以跟nums[left]比，也可以跟nums[right]比
+  这可不是随便选的，需要让它在处理正常序列的时候，也能有一样的效果
+  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+*/
+class Solution {
+    public int search(int[] nums, int target) {
+        if (nums.length == 1) {
+            return nums[0] == target ? 0 : -1;
+        }
+        int left = 0;
+        int right = nums.length - 1;
+        int mid;
+        while (left + 1 < right) {
+            mid = left + (right - left) / 2;
+            if (nums[left] < nums[mid]) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        int top = nums[right] > nums[left] ? right : left;
+        left = (top + 1) % nums.length;
+        right = top;
+        mid = getMid(left, right, nums.length);
+        while (!bigger(left, right, top)) {
+            if (nums[mid] > target) {
+                right = (mid - 1 + nums.length) % nums.length;
+                if (right == top) {
+                    return -1;
+                }
+                mid = getMid(left, right, nums.length);
+            } else if (nums[mid] == target) {
+                return mid;
+            } else {
+                left = (mid + 1) % nums.length;
+                if (left == (top + 1) % nums.length) {
+                    return -1;
+                }
+                mid = getMid(left, right, nums.length);
+            }
+        }
+        return -1;
+    }
+
+    public int getMid(int left, int right, int arrayLength) {
+        if (left > right) {
+            return (left + (right + arrayLength - left) / 2) % arrayLength;
+        } else if (left == right) {
+            return left;
+        } else {
+            return left + (right - left) / 2;
+        }
+    }
+
+    public boolean bigger(int left, int right, int top) {
+        if (left > top && right > top) {
+            return left > right;
+        }
+        if (left <= top && right <= top) {
+            return left > right;
+        }
+        return left < right;
+    }
+}
+
+/*
   其实我还瞟了一眼题解，发现没有必要找峰值
   直接在这个“半有序”的数组上就能做二分，我假装没看见得了，我的做法也还ok
 */
