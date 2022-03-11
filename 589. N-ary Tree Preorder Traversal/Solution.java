@@ -86,3 +86,47 @@ class Solution {
         return result;
     }
 }
+/*
+  它有幸被选中每日一题
+  很简单，我直接复制的之前的代码，但是在新的用例下，它已经不够快了
+  还好我对Java的数据结构有一定的理解，ArrayList改成LinkedList就过了
+  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+*/
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    List<Integer> result;
+    public List<Integer> preorder(Node root) {
+        result = new LinkedList<>();
+        dfs(root);
+        return result;
+    }
+
+    private void dfs(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        result.add(root.val);
+        for (Node child : root.children) {
+            dfs(child);
+        }
+    }
+}
