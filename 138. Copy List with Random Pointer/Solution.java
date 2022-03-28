@@ -62,4 +62,48 @@ class Solution {
   2. 还是存储。这次不借助map了，但是还是能快速的找到random。本质上跟上一个方法的思路是一样的，让新旧链表之间产生关系。
      在每个旧结点后面复制一下，然后第二次遍历复制random，新的random也很好找，就在旧random的后面。
      最后将新链表跟旧链表解开。
+  选用第一种方案实现
+  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
 */
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return head;
+        }
+        Node HEAD = head;
+        Node ret = new Node(head.val);
+        Node tail = ret;
+        Map<Node, Node> map = new HashMap<>();
+        map.put(head, tail);
+        head = head.next;
+        while (head != null) {
+            Node tmp = new Node(head.val);
+            tail.next = tmp;
+            tail = tmp;
+            map.put(head, tail);
+            head = head.next;
+        }
+        head = HEAD;
+        tail = ret;
+        while (head != null) {
+            tail.random = map.get(head.random);
+            head = head.next;
+            tail = tail.next;
+        }
+        return ret;
+    }
+}
