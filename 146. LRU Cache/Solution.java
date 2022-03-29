@@ -81,3 +81,41 @@ class LRUCache {
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
+/*
+  用LinkedHashMap实现
+  LinkedHashMap是在HashMap的基础上，将Entry用链表连起来，解决了HashMap无序的问题（丢失添加时的顺序）
+  基于这个特性，加上LRU算法的广泛用途，LinkedHashMap补充实现了LRU算法
+  只需要初始化时将accessOrder置为true，然后重写removeEldestEntry，实现对Least Recent的元素的删除
+  实现方式基本上都是继承LinkedHashMap，这里需要注意泛型
+  执行用时：38 ms, 在所有 Java 提交中击败了99.36%的用户
+*/
+class LRUCache extends LinkedHashMap<Integer, Integer> {
+    public int capacity;
+    public LRUCache(int capacity) {
+        super((int)(capacity / 0.75 + 1), 0.75f, true);
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        return super.getOrDefault(key, -1);
+    }
+    
+    public void put(int key, int value) {
+        super.put(key, value);
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> entry) {
+        if (this.size() > this.capacity) {
+            return true;
+        }
+        return false;
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
