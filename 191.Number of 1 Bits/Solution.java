@@ -24,3 +24,39 @@ public class Solution {
         return count;
     }
 }
+/*
+  两年前的我还是太年轻啊，对位运算的理解，不够深入
+  n % 2和n & 1，效果可以说是一样的
+  但是逻辑右移>>>，可以跟/2差太多了
+  逻辑右移就不需要什么加上Math.pow(2, 30)这种操作
+  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+*/
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            count += (n & 1);
+            n = n >>> 1;
+        }
+        return count;
+    }
+}
+/*
+  这个方法，更dio！
+  n & (n - 1)可以消除最后一个0
+  说实在的，这两种方法，要是两年前，我连看都不带看的，感觉非常的冷门
+  但是，在我经历两年的做题后，我觉得这些都是基操
+  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+*/
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            count++;
+            n = n & (n - 1);
+        }
+        return count;
+    }
+}
