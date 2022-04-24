@@ -1,14 +1,13 @@
-//54. 螺旋矩阵
+// 剑指 Offer 29. 顺时针打印矩阵
 /*
-  题目很容易理解
-  一开始想用坐标，然后限制已遍历的范围去做，想想都觉得麻烦（现在我在写题解的时候又想到一种维护另一个布尔数组来标注已遍历的方法，好写一些）
-  后来想，干脆转化成list，然后遍历完了就删
-  所以这个解法用的是list，当然效率是可想而知的慢一点点
-  执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+  同主站54题
+  那个要求返回值是list
+  这个是数组
+  懒得转了
+  执行用时：6 ms, 在所有 Java 提交中击败了5.44%的用户
 */
 class Solution {
-    public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new ArrayList<>();
+    public int[] spiralOrder(int[][] matrix) {
         List<List<Integer>> list = new ArrayList<>(matrix.length);
         for (int i = 0; i < matrix.length; i++) {
             List<Integer> tmp = new ArrayList<>(matrix[i].length);
@@ -46,7 +45,10 @@ class Solution {
                 }
             }
         }
-
-        return result;
+        int[] ret = new int[result.size()];
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = result.get(i);
+        }
+        return ret;
     }
 }
