@@ -60,3 +60,135 @@ class Solution {
         }
     }
 }
+/*
+  复杂的字符串问题的正解！
+  依旧是有限状态自动机
+  但是这次不需要推什么数字逻辑，用字符串就可以
+  列个表，一种状态经过字符，转换成另一种状态
+  这个做法并不是最快的，因为最快的方法用的if-else
+  我想这里用字符串表示状态，后面还需要用equals来判断，确实会笨了些
+  执行用时：2 ms, 在所有 Java 提交中击败了30.08%的用户
+*/
+class Solution {
+    public int myAtoi(String s) {
+        s = s.trim();
+        Automation automation = new Automation();
+        for (int i = 0; i < s.length(); i++) {
+            automation.get(s.charAt(i));
+        }
+        return automation.sign * (int)automation.ans;
+    }
+
+    class Automation {
+        public int sign = 1;
+        public long ans = 0;
+        private String state = "start";
+        private Map<String, String[]> table = new HashMap<>();
+
+        public Automation() {
+            table.put("start", new String[]{"start", "signed", "number", "end"});
+            table.put("signed", new String[]{"end", "end", "number", "end"});
+            table.put("number", new String[]{"end", "end", "number", "end"});
+            table.put("end", new String[]{"end", "end", "end", "end"});
+        }
+
+        public void get(char c) {
+            state = table.get(state)[getCol(c)];
+            if (state.equals("number")) {
+                ans *= 10;
+                ans += c - '0';
+                if (sign == 1) {
+                    if (ans > Integer.MAX_VALUE) {
+                        ans = Integer.MAX_VALUE;
+                    }
+                } else if (sign == -1) {
+                    if (ans > (long)Integer.MAX_VALUE + 1) {
+                        ans = (long)Integer.MAX_VALUE + 1;
+                    }
+                }
+            } else if (state.equals("signed")) {
+                if (c == '-') {
+                    sign = -1;
+                }
+            }
+        }
+
+        public int getCol(char c) {
+            if (c == ' ') {
+                return 0;
+            } else if (c == '+' || c == '-') {
+                return 1;
+            } else if (Character.isDigit(c)) {
+                return 2;
+            } else {
+                return 3;
+            }
+        }
+    }
+}
+/*
+  想着用枚举类来避免字符串的呆呆的equals
+  但是好像没啥用
+  不过平常不怎么用枚举，这里用了也算熟悉一下
+  执行用时：2 ms, 在所有 Java 提交中击败了30.08%的用户
+*/
+class Solution {
+    public int myAtoi(String s) {
+        s = s.trim();
+        Automation automation = new Automation();
+        for (int i = 0; i < s.length(); i++) {
+            automation.get(s.charAt(i));
+        }
+        return automation.sign * (int)automation.ans;
+    }
+
+    class Automation {
+        enum State {
+            START, SIGN, NUMBER, END;
+        }
+        public int sign = 1;
+        public long ans = 0;
+        private State state = State.START;
+        private Map<State, State[]> table = new HashMap<>();
+
+        public Automation() {
+            table.put(State.START, new State[]{State.START, State.SIGN, State.NUMBER, State.END});
+            table.put(State.SIGN, new State[]{State.END, State.END, State.NUMBER, State.END});
+            table.put(State.NUMBER, new State[]{State.END, State.END, State.NUMBER, State.END});
+            table.put(State.END, new State[]{State.END, State.END, State.END, State.END});
+        }
+
+        public void get(char c) {
+            state = table.get(state)[getCol(c)];
+            if (state == State.NUMBER) {
+                ans *= 10;
+                ans += c - '0';
+                if (sign == 1) {
+                    if (ans > Integer.MAX_VALUE) {
+                        ans = Integer.MAX_VALUE;
+                    }
+                } else if (sign == -1) {
+                    if (ans > (long)Integer.MAX_VALUE + 1) {
+                        ans = (long)Integer.MAX_VALUE + 1;
+                    }
+                }
+            } else if (state == State.SIGN) {
+                if (c == '-') {
+                    sign = -1;
+                }
+            }
+        }
+
+        public int getCol(char c) {
+            if (c == ' ') {
+                return 0;
+            } else if (c == '+' || c == '-') {
+                return 1;
+            } else if (Character.isDigit(c)) {
+                return 2;
+            } else {
+                return 3;
+            }
+        }
+    }
+}

@@ -46,3 +46,49 @@ class Solution {
         return answerStr.toString();
     }
 }
+/*
+  同LCOFII-2
+  现在写的那叫一个赏心悦目
+  看之前写的，是啥啊
+  执行用时：1 ms, 在所有 Java 提交中击败了99.95%的用户
+*/
+class Solution {
+    public String addBinary(String a, String b) {
+        if (a.length() < b.length()) {
+            return addBinary(b, a);
+        }
+        // a > b
+        int aLen = a.length();
+        int bLen = b.length();
+        char extra = '0';
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= aLen; i++) {
+            char ac = a.charAt(aLen - i);
+            char bc = bLen - i >= 0 ? b.charAt(bLen - i) : '0';
+            int count = 0;
+            if (ac == '1') {
+                count++;
+            }
+            if (bc == '1') {
+                count++;
+            }
+            if (extra == '1') {
+                count++;
+            }
+            if ((count & 1) == 1) {
+                sb.insert(0, '1');
+            } else {
+                sb.insert(0, '0');
+            }
+            if (count >= 2) {
+                extra = '1';
+            } else {
+                extra = '0';
+            }
+        }
+        if (extra == '1') {
+            sb.insert(0, '1');
+        }
+        return sb.toString();
+    }
+}
